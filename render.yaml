@@ -1,0 +1,8 @@
+services:
+
+- type: web
+  name: black-nova-ip-scanner
+  runtime: python
+  plan: free
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn app:app
