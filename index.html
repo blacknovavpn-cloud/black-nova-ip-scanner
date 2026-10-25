@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>BLACK NOVA | IP Scanner</title>
+<style>
+:root {
+  --bg:#080808;
+  --card:#111111;
+  --gold:#d6b45c;
+  --gold2:#f5d98b;
+  --text:#f5f2e9;
+  --muted:#99958a;
+  --border:#302817;
+  --green:#62dc91;
+  --red:#ff7777;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Tahoma,Arial,sans-serif;font-size:14px;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{
+  padding:19px 16px 14px;
+  border-bottom:1px solid var(--border);
+  background:#0b0b0b;
+  position:sticky;top:0;z-index:5;
+}
+.top{display:flex;align-items:center;gap:12px}
+.menu{
+  background:none;border:1px solid var(--border);color:var(--gold);
+  border-radius:10px;width:43px;height:43px;font-size:23px;
+}
+.brand{flex:1}
+.brand-name{
+  font-size:21px;font-weight:900;letter-spacing:2px;color:var(--gold2)
+}
+.brand-sub{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px}
+.star{font-size:27px;color:var(--gold)}
+.container{max-width:680px;margin:auto;padding:17px 14px 95px}
+.hero{
+  text-align:center;padding:23px 10px 21px;
+  border:1px solid var(--border);border-radius:18px;
+  background:radial-gradient(ellipse at top,#28200f 0%,#111 48%,#0b0b0b 100%);
+}
+.logo{
+  width:65px;height:65px;border:2px solid var(--gold);
+  border-radius:18px;margin:0 auto 13px;display:grid;place-items:center;
+  font-size:34px;font-weight:900;color:var(--gold2);
+  box-shadow:0 0 24px #d6b45c20;
+}
+.hero h1{font-size:22px;margin:8px 0;color:var(--gold2);letter-spacing:1px}
+.hero p{color:var(--muted);line-height:2;margin:8px 0 0}
+.status{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid #315b3d;color:var(--green);
+  padding:7px 11px;border-radius:30px;font-size:11px;margin-top:14px
+}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%}
+.section-title{font-size:15px;color:var(--gold2);margin:25px 2px 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:15px;
+}
+.feature-icon{font-size:23px;color:var(--gold);margin-bottom:10px}
+.feature-title{font-weight:bold;margin-bottom:7px}
+.feature-desc{color:var(--muted);font-size:11px;line-height:1.9}
+.panel{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:15px;padding:16px;margin-top:12px
+}
+label{display:block;color:#d8d1c1;margin:14px 0 8px;font-size:12px}
+input,select{
+  display:block;width:100%;min-height:46px;padding:12px;
+  border-radius:9px;border:1px solid #403723;
+  color:var(--text);background:#090909;outline:none;
+  direction:ltr;text-align:left;
+}
+input:focus,select:focus{border-color:var(--gold)}
+button.primary{
+  width:100%;border:0;border-radius:10px;padding:14px;
+  background:linear-gradient(110deg,#a98736,#f2d787);
+  color:#151108;font-weight:900;margin-top:16px;
+}
+button.secondary{
+  border:1px solid var(--border);border-radius:9px;
+  color:var(--gold2);background:#17140e;padding:10px 12px
+}
+button:disabled{opacity:.5;cursor:wait}
+.note{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}
+.result{
+  display:none;margin-top:15px;padding:14px;border-radius:11px;
+  background:#090909;border:1px solid var(--border);line-height:2
+}
+.result.show{display:block}
+.ok{color:var(--green)}.bad{color:var(--red)}.gold{color:var(--gold2)}
+.result-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #252117;padding:7px 0}
+.result-row:last-child{border:0}
+.history-item{border-bottom:1px solid #302817;padding:10px 0;direction:ltr;text-align:left;overflow-wrap:anywhere}
+.history-item:last-child{border:0}
+.history-actions{display:flex;gap:8px;margin-top:12px}
+.history-actions button{flex:1}
+.empty{color:var(--muted);font-size:12px;line-height:2}
+.side{
+  display:none;position:fixed;inset:0;z-index:20;background:#000b
+}
+.side.open{display:block}
+.drawer{
+  background:#101010;border-left:1px solid var(--border);
+  width:min(310px,85vw);height:100%;padding:20px
+}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.drawer button.close{background:none;border:0;color:var(--gold);font-size:25px}
+.navitem{
+  display:block;width:100%;text-align:right;padding:14px 10px;
+  color:var(--text);background:transparent;border:0;border-bottom:1px solid #282318
+}
+.navitem:active,.navitem:hover{color:var(--gold2)}
+footer{
+  position:fixed;bottom:0;left:0;right:0;z-index:4;
+  display:flex;justify-content:space-around;
+  background:#0c0c0cf5;border-top:1px solid var(--border);
+  padding:10px 4px calc(10px + env(safe-area-inset-bottom))
+}
+footer button{background:none;border:0;color:var(--muted);font-size:10px;line-height:1.8}
+footer button span{display:block;font-size:19px;color:var(--gold)}
+.hidden{display:none!important}
+@media(min-width:550px){.grid{grid-template-columns:repeat(4,1fr)}.container{padding-top:25px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <button class="menu" id="menuBtn" aria-label="منو">☰</button>
+    <div class="brand">
+      <div class="brand-name">BLACK NOVA</div>
+      <div class="brand-sub">IP SCANNER · SNI CHECKER</div>
+    </div>
+    <div class="star">✦</div>
+  </div>
+</header><div class="side" id="side">
+  <div class="drawer">
+    <div class="drawer-head">
+      <strong class="gold">BLACK NOVA</strong>
+      <button class="close" id="closeMenu">×</button>
+    </div>
+    <button class="navitem" data-go="home">⌂ خانه</button>
+    <button class="navitem" data-go="ipscan">⌕ اسکن IP</button>
+    <button class="navitem" data-go="sni">◇ بررسی SNI / TLS</button>
+    <button class="navitem" data-go="ports">↔ تست پورت و پاسخ</button>
+    <button class="navitem" data-go="saved">☆ IPهای ذخیره‌شده</button>
+    <button class="navitem" data-go="history">◷ تاریخچه اسکن</button>
+    <button class="navitem" data-go="settings">⚙ تنظیمات اسکنر</button>
+    <button class="navitem" data-go="about">ⓘ درباره BLACK NOVA</button>
+  </div>
+</div><main class="container" id="home">
+  <section class="hero">
+    <div class="logo">B✦</div>
+    <h1>BLACK NOVA</h1>
+    <div class="gold">IP SCANNER & SNI CHECKER</div>
+    <p>ابزار بررسی اتصال IP و اطلاعات ارتباط امن TLS</p>
+    <div class="status"><span class="dot"></span><span id="apiStatus">در حال بررسی ارتباط با سرور</span></div>
+  </section>  <div class="section-title">ابزارهای اسکن</div>
+  <div class="grid">
+    <div class="card" data-target="ipscan">
+      <div class="feature-icon">⌕</div>
+      <div class="feature-title">اسکن IP</div>
+      <div class="feature-desc">بررسی دسترسی به IP عمومی</div>
+    </div>
+    <div class="card" data-target="sni">
+      <div class="feature-icon">◇</div>
+      <div class="feature-title">SNI / TLS</div>
+      <div class="feature-desc">بخش بررسی نام میزبان و TLS</div>
+    </div>
+    <div class="card" data-target="ports">
+      <div class="feature-icon">↔</div>
+      <div class="feature-title">تست پورت</div>
+      <div class="feature-desc">بررسی پورت‌های مجاز</div>
+    </div>
+    <div class="card" data-target="history">
+      <div class="feature-icon">◷</div>
+      <div class="feature-title">تاریخچه</div>
+      <div class="feature-desc">مشاهده نتایج قبلی روی همین گوشی</div>
+    </div>
+  </div>  <section id="ipscan">
+    <div class="section-title">⌕ اسکن IP عمومی</div>
+    <div class="panel">
+      <label for="ip">آدرس IP</label>
+      <input id="ip" inputmode="decimal" autocomplete="off" placeholder="مثال: 1.1.1.1">
+      <label for="port">پورت مقصد</label>
+      <select id="port">
+        <option value="443">443 — HTTPS / TLS</option>
+        <option value="80">80 — HTTP</option>
+      </select>
+      <button class="primary" id="scanBtn">شروع بررسی</button>
+      <div class="note">فقط IP عمومی وارد کن. اسکن فقط پورت‌های ۸۰ و ۴۴۳ را بررسی می‌کند. برای اسکن فقط سامانه‌هایی را بررسی کن که اجازهٔ تست آن‌ها را داری.</div>
+      <div class="result" id="scanResult" aria-live="polite"></div>
+    </div>
+  </section>  <section id="sni">
+    <div class="section-title">◇ بررسی SNI / TLS</div>
+    <div class="panel">
+      <div class="gold">بررسی نام میزبان (SNI)</div>
+      <p class="feature-desc">این بخش در رابط کاربری آماده است؛ اتصال واقعی SNI هنوز باید به بک‌اند اضافه شود.</p>
+      <label for="sniHost">نام میزبان SNI</label>
+      <input id="sniHost" placeholder="example.com" autocomplete="off">
+      <label for="sniIp">IP سرور (اختیاری)</label>
+      <input id="sniIp" inputmode="decimal" placeholder="1.1.1.1">
+      <button class="secondary" id="sniBtn" style="width:100%;margin-top:16px">وضعیت قابلیت</button>
+      <div class="result" id="sniResult"></div>
+    </div>
+  </section>  <section id="ports">
+    <div class="section-title">↔ تست پورت و پاسخ</div>
+    <div class="panel">
+      <p class="feature-desc">زمان پاسخ و دسترسی به پورت انتخاب‌شده در درخواست اسکن نمایش داده می‌شود.</p>
+      <button class="secondary" style="width:100%" id="portGo">رفتن به تست IP و پورت</button>
+    </div>
+  </section>  <section id="saved">
+    <div class="section-title">☆ IPهای ذخیره‌شده</div>
+    <div class="panel">
+      <div id="savedList" class="empty">هنوز IP ذخیره‌شده‌ای نداری.</div>
+    </div>
+  </section>  <section id="history">
+    <div class="section-title">◷ تاریخچه اسکن</div>
+    <div class="panel">
+      <div id="historyList" class="empty">هنوز اسکن انجام نشده است.</div>
+      <div class="history-actions">
+        <button class="secondary" id="exportBtn">خروجی JSON</button>
+        <button class="secondary" id="clearBtn">پاک‌کردن تاریخچه</button>
+      </div>
+    </div>
+  </section>  <section id="settings">
+    <div class="section-title">⚙ تنظیمات</div>
+    <div class="panel">
+      <div class="feature-title">ذخیره‌سازی محلی</div>
+      <div class="feature-desc">تاریخچه و IPهای ذخیره‌شده فقط در فضای ذخیره‌سازی همین مرورگر نگهداری می‌شوند.</div>
+    </div>
+  </section>  <section id="about">
+    <div class="section-title">ⓘ درباره BLACK NOVA</div>
+    <div class="panel">
+      <div class="feature-title gold">BLACK NOVA IP SCANNER</div>
+      <p class="feature-desc">ابزار مستقل بررسی IP و TLS. نتایج از سرور آنلاین بررسی می‌شوند و ممکن است با توجه به موقعیت سرور، اپراتور و شبکهٔ کاربر متفاوت باشند.</p>
+    </div>
+  </section>
+</main><footer>
+  <button data-go="home"><span>⌂</span>خانه</button>
+  <button data-go="ipscan"><span>⌕</span>اسکن IP</button>
+  <button data-go="sni"><span>◇</span>SNI / TLS</button>
+  <button data-go="saved"><span>☆</span>ذخیره‌شده‌ها</button>
+  <button data-go="history"><span>◷</span>تاریخچه</button>
+</footer><script>
+const API = "https://black-nova-ip-scanner.onrender.com";
+const $ = id => document.getElementById(id);
+
+function getStore(key) {
+  try { return JSON.parse(localStorage.getItem(key) || "[]"); }
+  catch { return []; }
+}
+function setStore(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); }
+  catch {}
+}
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+function goTo(id) {
+  const section = $(id);
+  if (section) section.scrollIntoView({behavior:"smooth",block:"start"});
+  $("side").classList.remove("open");
+}
+document.querySelectorAll("[data-go]").forEach(btn =>
+  btn.addEventListener("click", () => goTo(btn.dataset.go))
+);
+document.querySelectorAll("[data-target]").forEach(card =>
+  card.addEventListener("click", () => goTo(card.dataset.target))
+);
+$("menuBtn").onclick = () => $("side").classList.add("open");
+$("closeMenu").onclick = () => $("side").classList.remove("open");
+$("side").addEventListener("click", e => {
+  if (e.target === $("side")) $("side").classList.remove("open");
+});
+$("portGo").onclick = () => goTo("ipscan");
+
+async function checkApi() {
+  try {
+    const response = await fetch(API + "/", {method:"GET"});
+    const data = await response.json();
+    $("apiStatus").textContent =
+      response.ok && data.status === "online" ? "سرور آنلاین است" : "پاسخ نامشخص";
+  } catch {
+    $("apiStatus").textContent = "ارتباط برقرار نشد";
+  }
+}
+
+function renderHistory() {
+  const history = getStore("bn_history");
+  $("historyList").innerHTML = history.length
+    ? history.map(item => `<div class="history-item">
+        <strong>${escapeHtml(item.ip)}</strong> · ${escapeHtml(item.port)}<br>
+        <span class="${item.reachable ? "ok" : "bad"}">${item.reachable ? "قابل دسترسی" : "ناموفق"}</span>
+        <small> · ${escapeHtml(item.time)}</small>
+      </div>`).join("")
+    : '<div class="empty">هنوز اسکن انجام نشده است.</div>';
+
+  const saved = getStore("bn_saved");
+  $("savedList").innerHTML = saved.length
+    ? saved.map(ip => `<div class="history-item">
+        ${escapeHtml(ip)}
+        <button class="secondary" data-remove="${escapeHtml(ip)}">حذف</button>
+      </div>`).join("")
+    : '<div class="empty">هنوز IP ذخیره‌شده‌ای نداری.</div>';
+
+  document.querySelectorAll("[data-remove]").forEach(btn => {
+    btn.onclick = () => {
+      setStore("bn_saved", getStore("bn_saved").filter(ip => ip !== btn.dataset.remove));
+      renderHistory();
+    };
+  });
+}
+
+$("scanBtn").onclick = async () => {
+  const ip = $("ip").value.trim();
+  const port = Number($("port").value);
+  const box = $("scanResult");
+  box.className = "result show";
+  box.textContent = "در حال بررسی اتصال...";
+  $("scanBtn").disabled = true;
+
+  try {
+    const response = await fetch(API + "/check", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ip,port})
+    });
+    const data = await response.json();
+
+    if (!response.ok && !data.ip) throw new Error(data.error || "درخواست ناموفق بود");
+
+    const reachable = data.reachable === true;
+    const elapsed = data.elapsed_ms == null ? null : data.elapsed_ms;
+    box.innerHTML = `
+      <div class="result-row"><span>IP</span><b dir="ltr">${escapeHtml(data.ip || ip)}</b></div>
+      <div class="result-row"><span>پورت</span><b>${escapeHtml(port)}</b></div>
+      <div class="result-row"><span>وضعیت اتصال</span><b class="${reachable ? "ok" : "bad"}">${reachable ? "قابل دسترسی" : "ناموفق"}</b></div>
+      ${data.tls ? `<div class="result-row"><span>نسخه TLS</span><b dir="ltr">${escapeHtml(data.tls)}</b></div>` : ""}
+      ${elapsed !== null ? `<div class="result-row"><span>زمان پاسخ</span><b>${escapeHtml(elapsed)} ms</b></div>` : ""}
+      ${data.error ? `<div class="note">${escapeHtml(data.error)}</div>` : ""}
+      <button class="secondary" id="saveIpBtn" style="width:100%;margin-top:12px" ${reachable ? "" : "disabled"}>☆ ذخیره IP موفق</button>
+    `;
+
+    const history = getStore("bn_history");
+    history.unshift({ip:data.ip || ip,port,reachable,time:new Date().toLocaleString("fa-IR")});
+    setStore("bn_history", history.slice(0,100));
+
+    const saveBtn = $("saveIpBtn");
+    if (saveBtn) saveBtn.onclick = () => {
+      const saved = getStore("bn_saved");
+      if (!saved.includes(data.ip || ip)) saved.unshift(data.ip || ip);
+      setStore("bn_saved", saved.slice(0,100));
+      renderHistory();
+      saveBtn.textContent = "ذخیره شد ✓";
+    };
+    renderHistory();
+  } catch (error) {
+    box.innerHTML = `<span class="bad">خطا در درخواست</span><p class="note">${escapeHtml(error.message)}</p>
+      <div class="note">اگر سرور خواب بوده، چند لحظه صبر کن و دوباره امتحان کن.</div>`;
+  } finally {
+    $("scanBtn").disabled = false;
+  }
+};
+
+$("sniBtn").onclick = () => {
+  const host = $("sniHost").value.trim();
+  $("sniResult").className = "result show";
+  $("sniResult").innerHTML = host
+    ? `<span class="gold">بخش SNI هنوز به بک‌اند وصل نشده است.</span><p class="note">نام واردشده: ${escapeHtml(host)}. برای تست واقعی باید بک‌اند را برای ارسال SNI و بررسی گواهی TLS توسعه دهیم.</p>`
+    : '<span class="bad">ابتدا نام میزبان SNI را وارد کن.</span>';
+};
+
+$("clearBtn").onclick = () => {
+  if (confirm("تاریخچه اسکن پاک شود؟")) {
+    setStore("bn_history", []);
+    renderHistory();
+  }
+};
+$("exportBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify({
+    history:getStore("bn_history"),saved:getStore("bn_saved")
+  },null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "black-nova-history.json";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+renderHistory();
+checkApi();
+</script></body>
+                 </html>
