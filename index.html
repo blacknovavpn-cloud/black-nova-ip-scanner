@@ -1,405 +1,978 @@
-<!DOCTYPE html><html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<title>BLACK NOVA | IP Scanner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#02070c">
+<title>BLACK NOVA | IP Scanner & SNI</title>
+
 <style>
-:root {
-  --bg:#080808;
-  --card:#111111;
-  --gold:#d6b45c;
-  --gold2:#f5d98b;
-  --text:#f5f2e9;
-  --muted:#99958a;
-  --border:#302817;
-  --green:#62dc91;
-  --red:#ff7777;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root{
+ --bg:#020609;
+ --panel:#06111a;
+ --panel2:#081722;
+ --gold:#ffcc45;
+ --gold2:#ffec99;
+ --gold3:#a86d00;
+ --line:#76551b;
+ --text:#f4f5fa;
+ --muted:#91a2ba;
+ --blue:#172d40;
+ --green:#ffd65d;
 }
+
 *{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Tahoma,Arial,sans-serif;font-size:14px;
+ margin:0;
+ background:
+ radial-gradient(ellipse at 50% 20%,#111a1d 0%,#03080c 48%,#010306 100%);
+ color:var(--text);
+ font-family:'Vazirmatn',Tahoma,sans-serif;
+ min-height:100vh;
+ padding-bottom:105px;
+ overflow-x:hidden;
 }
-button,input,select{font:inherit}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:-1;
+ opacity:.32;
+ background-image:
+ radial-gradient(circle at 15% 17%,#ffcf4d 1px,transparent 2px),
+ radial-gradient(circle at 78% 30%,#d99b24 1px,transparent 2px),
+ radial-gradient(circle at 42% 64%,#ffcc45 1px,transparent 2px),
+ radial-gradient(circle at 86% 83%,#ffcc45 1px,transparent 2px);
+ background-size:83px 91px,119px 103px,137px 121px,101px 131px;
+}
+
+button,input{font:inherit}
 button{cursor:pointer}
-header{
-  padding:19px 16px 14px;
-  border-bottom:1px solid var(--border);
-  background:#0b0b0b;
-  position:sticky;top:0;z-index:5;
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold)}
+
+.topbar{
+ height:94px;
+ padding:12px 17px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ border-bottom:1px solid #453516;
+ background:linear-gradient(180deg,#03080d,#061019);
+ box-shadow:0 3px 22px #000;
+ position:relative;
 }
-.top{display:flex;align-items:center;gap:12px}
-.menu{
-  background:none;border:1px solid var(--border);color:var(--gold);
-  border-radius:10px;width:43px;height:43px;font-size:23px;
+
+.topbar:after{
+ content:"";
+ position:absolute;
+ height:1px;
+ bottom:0;
+ left:8%;
+ right:8%;
+ background:linear-gradient(90deg,transparent,var(--gold),transparent);
 }
-.brand{flex:1}
+
+.iconbtn{
+ width:42px;
+ height:42px;
+ border:0;
+ color:var(--gold);
+ background:transparent;
+ font-size:29px;
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ direction:ltr;
+}
+
+.brand-symbol{
+ font-size:60px;
+ font-weight:800;
+ font-style:italic;
+ line-height:1;
+ color:var(--gold);
+ text-shadow:0 0 9px #ffb900,0 0 24px #ad7200;
+}
+
 .brand-name{
-  font-size:21px;font-weight:900;letter-spacing:2px;color:var(--gold2)
+ font-family:Arial,sans-serif;
+ letter-spacing:2px;
+ font-size:clamp(17px,4vw,25px);
+ font-weight:800;
+ color:var(--gold2);
+ text-shadow:0 0 12px #9b6d15;
+ white-space:nowrap;
 }
-.brand-sub{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:1px}
-.star{font-size:27px;color:var(--gold)}
-.container{max-width:680px;margin:auto;padding:17px 14px 95px}
+
 .hero{
-  text-align:center;padding:23px 10px 21px;
-  border:1px solid var(--border);border-radius:18px;
-  background:radial-gradient(ellipse at top,#28200f 0%,#111 48%,#0b0b0b 100%);
+ max-width:620px;
+ margin:auto;
+ padding:0 15px;
 }
-.logo{
-  width:65px;height:65px;border:2px solid var(--gold);
-  border-radius:18px;margin:0 auto 13px;display:grid;place-items:center;
-  font-size:34px;font-weight:900;color:var(--gold2);
-  box-shadow:0 0 24px #d6b45c20;
+
+.art{
+ height:330px;
+ max-height:44vh;
+ min-height:245px;
+ position:relative;
+ overflow:hidden;
+ display:flex;
+ justify-content:center;
+ align-items:center;
 }
-.hero h1{font-size:22px;margin:8px 0;color:var(--gold2);letter-spacing:1px}
-.hero p{color:var(--muted);line-height:2;margin:8px 0 0}
-.status{
-  display:inline-flex;align-items:center;gap:7px;
-  border:1px solid #315b3d;color:var(--green);
-  padding:7px 11px;border-radius:30px;font-size:11px;margin-top:14px
+
+.art:before{
+ content:"";
+ position:absolute;
+ left:-10%;
+ right:-10%;
+ bottom:13%;
+ height:70px;
+ border-radius:50%;
+ border-top:2px solid #ffcf45;
+ box-shadow:0 -8px 22px #ffb800,0 -22px 65px #a66a00;
+ transform:rotate(-3deg);
 }
-.dot{width:7px;height:7px;background:var(--green);border-radius:50%}
-.section-title{font-size:15px;color:var(--gold2);margin:25px 2px 12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.art:after{
+ content:"";
+ position:absolute;
+ left:0;
+ right:0;
+ bottom:0;
+ height:80px;
+ background:linear-gradient(0deg,#03090d,transparent);
+}
+
+.iran-svg{
+ width:100%;
+ height:100%;
+ position:absolute;
+ inset:0;
+ filter:drop-shadow(0 0 7px #ffb900);
+}
+
+.hero-title{
+ text-align:center;
+ font-size:clamp(27px,6vw,39px);
+ line-height:1.6;
+ font-weight:800;
+ color:#ffda69;
+ text-shadow:0 0 12px #8c5b09;
+ margin:0 0 3px;
+}
+
+.subtitle{
+ text-align:center;
+ font-size:18px;
+ color:#e2e6ef;
+ margin:0 0 25px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:14px;
+}
+
+.subtitle:before,.subtitle:after{
+ content:"";
+ height:2px;
+ width:19%;
+ background:linear-gradient(90deg,transparent,var(--gold));
+}
+.subtitle:after{transform:rotate(180deg)}
+
 .card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:15px;
+ border:1px solid #906b22;
+ border-radius:24px;
+ background:linear-gradient(145deg,rgba(5,16,24,.97),rgba(2,8,13,.98));
+ box-shadow:inset 0 0 20px #06121b,0 0 15px #0008;
 }
-.feature-icon{font-size:23px;color:var(--gold);margin-bottom:10px}
-.feature-title{font-weight:bold;margin-bottom:7px}
-.feature-desc{color:var(--muted);font-size:11px;line-height:1.9}
-.panel{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:15px;padding:16px;margin-top:12px
+
+.form-card{padding:17px 14px 19px}
+
+.field{margin-bottom:19px}
+
+.field label{
+ display:block;
+ color:var(--gold2);
+ font-weight:700;
+ font-size:19px;
+ margin:0 5px 8px;
 }
-label{display:block;color:#d8d1c1;margin:14px 0 8px;font-size:12px}
-input,select{
-  display:block;width:100%;min-height:46px;padding:12px;
-  border-radius:9px;border:1px solid #403723;
-  color:var(--text);background:#090909;outline:none;
-  direction:ltr;text-align:left;
+
+.field label:before{
+ content:"•";
+ color:var(--gold);
+ margin-left:13px;
 }
-input:focus,select:focus{border-color:var(--gold)}
-button.primary{
-  width:100%;border:0;border-radius:10px;padding:14px;
-  background:linear-gradient(110deg,#a98736,#f2d787);
-  color:#151108;font-weight:900;margin-top:16px;
+
+.input-wrap{position:relative}
+
+.field input{
+ display:block;
+ width:100%;
+ min-height:59px;
+ border:1px solid #60748d;
+ border-radius:20px;
+ background:linear-gradient(90deg,#030b12,#071724);
+ color:white;
+ padding:12px 17px;
+ direction:ltr;
+ text-align:left;
+ font-size:17px;
+ box-shadow:inset 0 0 10px #0009;
 }
-button.secondary{
-  border:1px solid var(--border);border-radius:9px;
-  color:var(--gold2);background:#17140e;padding:10px 12px
+
+.field input::placeholder{color:#8b9bb4;opacity:1}
+
+.field input:focus{
+ border-color:var(--gold);
+ box-shadow:0 0 12px #b8871c55;
+ outline:none;
 }
-button:disabled{opacity:.5;cursor:wait}
-.note{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}
-.result{
-  display:none;margin-top:15px;padding:14px;border-radius:11px;
-  background:#090909;border:1px solid var(--border);line-height:2
+
+.field input.has-icon{padding-right:50px}
+
+.input-icon{
+ position:absolute;
+ right:15px;
+ top:50%;
+ transform:translateY(-50%);
+ color:#d7e4f4;
+ font-size:23px;
+ pointer-events:none;
 }
-.result.show{display:block}
-.ok{color:var(--green)}.bad{color:var(--red)}.gold{color:var(--gold2)}
-.result-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #252117;padding:7px 0}
-.result-row:last-child{border:0}
-.history-item{border-bottom:1px solid #302817;padding:10px 0;direction:ltr;text-align:left;overflow-wrap:anywhere}
-.history-item:last-child{border:0}
-.history-actions{display:flex;gap:8px;margin-top:12px}
-.history-actions button{flex:1}
-.empty{color:var(--muted);font-size:12px;line-height:2}
-.side{
-  display:none;position:fixed;inset:0;z-index:20;background:#000b
+
+.main-btn{
+ width:100%;
+ min-height:70px;
+ border-radius:24px;
+ border:2px solid #ffe88b;
+ background:linear-gradient(110deg,#b77b09,#ffda53 48%,#c88c12);
+ color:#171000;
+ font-size:23px;
+ font-weight:800;
+ box-shadow:0 0 17px #e4a91e77,inset 0 1px 8px #fff7a5;
 }
-.side.open{display:block}
+
+.main-btn:active{transform:scale(.99)}
+.main-btn:disabled{opacity:.65}
+
+.status-grid{
+ margin-top:29px;
+ padding:12px;
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:9px;
+}
+
+.status{
+ min-width:0;
+ min-height:124px;
+ padding:12px 5px;
+ border:1px solid #76551f;
+ border-radius:22px;
+ text-align:center;
+ background:linear-gradient(150deg,#06111a,#02070b);
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ gap:8px;
+}
+
+.status-title{
+ font-size:clamp(12px,3.4vw,16px);
+ color:#f5f5fa;
+ font-weight:600;
+}
+
+.status-icon{color:var(--gold);font-size:24px}
+
+.status-value{
+ font-size:14px;
+ color:var(--muted);
+ overflow-wrap:anywhere;
+}
+
+.status-value.good{color:var(--gold)}
+.status-value.bad{color:#ff8585}
+
+.saved-card{
+ margin-top:28px;
+ overflow:hidden;
+}
+
+.section-toggle{
+ width:100%;
+ min-height:95px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ padding:17px;
+ color:#fff5d4;
+ background:transparent;
+ border:0;
+ text-align:right;
+ font-weight:700;
+ font-size:19px;
+}
+
+.section-toggle .symbol{
+ color:var(--gold);
+ font-size:32px;
+}
+
+.saved-list{padding:0 13px 13px}
+
+.result-item{
+ border:1px solid #4b432d;
+ border-radius:15px;
+ padding:13px;
+ margin-top:9px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+ background:#06111a;
+ direction:ltr;
+}
+
+.result-item .details{min-width:0;overflow-wrap:anywhere}
+.result-item small{display:block;color:var(--muted);margin-top:4px}
+.result-item button{
+ border:1px solid #82601f;
+ border-radius:10px;
+ padding:7px 10px;
+ background:#171506;
+ color:var(--gold);
+}
+
+.empty{
+ text-align:center;
+ color:var(--muted);
+ padding:20px 10px;
+ font-size:14px;
+}
+
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:20;
+ max-width:620px;
+ margin:auto;
+ min-height:91px;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ border:1px solid #80601e;
+ border-bottom:0;
+ border-radius:35px 35px 0 0;
+ background:rgba(2,9,15,.96);
+ backdrop-filter:blur(15px);
+ box-shadow:0 -10px 35px #000b;
+ padding-bottom:env(safe-area-inset-bottom);
+}
+
+.nav-btn{
+ background:transparent;
+ border:0;
+ color:#dce5f2;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:2px;
+ font-size:14px;
+}
+
+.nav-btn .nav-icon{font-size:29px}
+.nav-btn.active{color:var(--gold2);text-shadow:0 0 12px #e6a916}
+.nav-btn.active .nav-icon{filter:drop-shadow(0 0 6px #ffcf45)}
+
+.page{display:none}
+.page.active{display:block}
+
+.subpage{
+ max-width:620px;
+ padding:20px 15px;
+ margin:auto;
+}
+
+.subpage h2{
+ color:var(--gold2);
+ font-size:23px;
+ margin-top:0;
+}
+
+.subpage p{color:var(--muted);line-height:2}
+
+.action-btn{
+ padding:12px 17px;
+ border:1px solid #99721e;
+ background:#11140f;
+ color:var(--gold2);
+ border-radius:13px;
+}
+
+.menu-overlay{
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:40;
+ background:#000b;
+}
+
+.menu-overlay.open{display:block}
+
 .drawer{
-  background:#101010;border-left:1px solid var(--border);
-  width:min(310px,85vw);height:100%;padding:20px
+ width:min(85%,340px);
+ height:100%;
+ background:#030a10;
+ border-left:1px solid #9c741e;
+ padding:20px 15px;
+ overflow:auto;
+ box-shadow:0 0 30px #000;
 }
-.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.drawer button.close{background:none;border:0;color:var(--gold);font-size:25px}
-.navitem{
-  display:block;width:100%;text-align:right;padding:14px 10px;
-  color:var(--text);background:transparent;border:0;border-bottom:1px solid #282318
+
+.drawer-brand{
+ text-align:center;
+ padding:18px 0 25px;
+ border-bottom:1px solid #54411b;
+ margin-bottom:15px;
 }
-.navitem:active,.navitem:hover{color:var(--gold2)}
-footer{
-  position:fixed;bottom:0;left:0;right:0;z-index:4;
-  display:flex;justify-content:space-around;
-  background:#0c0c0cf5;border-top:1px solid var(--border);
-  padding:10px 4px calc(10px + env(safe-area-inset-bottom))
+
+.drawer-brand b{color:var(--gold);font-size:23px;letter-spacing:2px;direction:ltr;display:block}
+.drawer-brand small{color:var(--muted)}
+
+.menu-item{
+ width:100%;
+ display:flex;
+ align-items:center;
+ gap:13px;
+ padding:15px 12px;
+ margin-bottom:7px;
+ color:#e6e9ef;
+ border:1px solid transparent;
+ border-radius:13px;
+ background:transparent;
+ text-align:right;
+ font-size:15px;
 }
-footer button{background:none;border:0;color:var(--muted);font-size:10px;line-height:1.8}
-footer button span{display:block;font-size:19px;color:var(--gold)}
-.hidden{display:none!important}
-@media(min-width:550px){.grid{grid-template-columns:repeat(4,1fr)}.container{padding-top:25px}}
+
+.menu-item.active,.menu-item:active{
+ background:linear-gradient(90deg,#3a2b0b,#17170e);
+ border-color:#72551b;
+ color:var(--gold2);
+}
+
+.notice{
+ border:1px solid #4e401f;
+ border-radius:15px;
+ padding:12px;
+ margin-top:15px;
+ color:var(--muted);
+ line-height:1.9;
+ font-size:13px;
+}
+
+.toast{
+ position:fixed;
+ z-index:60;
+ bottom:110px;
+ left:15px;
+ right:15px;
+ max-width:550px;
+ margin:auto;
+ padding:14px;
+ border:1px solid var(--gold);
+ border-radius:13px;
+ background:#07111a;
+ color:#fff;
+ text-align:center;
+ display:none;
+}
+
+.toast.show{display:block}
+
+.spinner{
+ display:inline-block;
+ width:17px;
+ height:17px;
+ border:2px solid #171000;
+ border-top-color:transparent;
+ border-radius:50%;
+ animation:spin .7s linear infinite;
+ vertical-align:middle;
+ margin-left:8px;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(min-width:700px){
+ .hero{padding-top:12px}
+ .art{height:370px}
+ body{padding-bottom:110px}
+}
+
+@media(max-width:360px){
+ .topbar{padding:10px}
+ .brand-symbol{font-size:48px}
+ .brand-name{font-size:15px;letter-spacing:1px}
+ .art{min-height:220px}
+ .status-grid{padding:7px;gap:5px}
+ .status{min-height:115px}
+ .status-title{font-size:11px}
+ .section-toggle{font-size:16px}
+}
 </style>
 </head>
+
 <body>
-<header>
-  <div class="top">
-    <button class="menu" id="menuBtn" aria-label="منو">☰</button>
-    <div class="brand">
-      <div class="brand-name">BLACK NOVA</div>
-      <div class="brand-sub">IP SCANNER · SNI CHECKER</div>
-    </div>
-    <div class="star">✦</div>
+
+<header class="topbar">
+ <button class="iconbtn" id="menuOpen" aria-label="باز کردن منو">☰</button>
+ <div class="brand">
+  <div class="brand-symbol">✳B</div>
+  <div class="brand-name">BLACK NOVA</div>
+ </div>
+ <button class="iconbtn" aria-label="امنیت" onclick="showToast('BLACK NOVA • ابزار بررسی اتصال')">♢</button>
+</header>
+
+<main id="scanPage" class="page active">
+ <section class="hero">
+
+  <div class="art">
+   <svg class="iran-svg" viewBox="0 0 600 390" role="img" aria-label="نقشه نورانی ایران و برج آزادی">
+    <defs>
+     <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3a0"/>
+      <stop offset=".45" stop-color="#ffba18"/>
+      <stop offset="1" stop-color="#a66300"/>
+     </linearGradient>
+     <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+     </filter>
+    </defs>
+
+    <g opacity=".5" stroke="#b87d14" stroke-width=".8">
+     <path d="M0 85L130 180 230 50 350 190 470 60 600 165"/>
+     <path d="M0 250L145 130 300 310 450 150 600 275"/>
+     <path d="M40 30L200 240 390 30 540 300"/>
+     <path d="M20 320L170 210 280 350 420 230 570 360"/>
+    </g>
+
+    <g fill="#ffca37">
+     <circle cx="90" cy="120" r="2"/><circle cx="145" cy="180" r="2"/>
+     <circle cx="235" cy="62" r="2"/><circle cx="370" cy="130" r="2"/>
+     <circle cx="470" cy="73" r="2"/><circle cx="520" cy="220" r="2"/>
+     <circle cx="180" cy="285" r="2"/><circle cx="420" cy="300" r="2"/>
+    </g>
+
+    <!-- نقشه شماتیک ایران با خط نورانی -->
+    <path d="M170 72
+      L205 84 L224 65 L250 75 L274 59 L296 74
+      L326 64 L348 83 L374 77 L395 100 L425 108
+      L437 133 L420 156 L432 180 L411 199
+      L419 222 L397 241 L389 270 L360 279
+      L343 300 L319 289 L295 306 L275 287
+      L250 283 L232 260 L205 254 L191 231
+      L166 219 L155 194 L133 182 L141 157
+      L123 135 L140 112 L151 89 Z"
+      fill="#07131a" fill-opacity=".8"
+      stroke="url(#goldLine)" stroke-width="3.5"
+      stroke-linejoin="round" filter="url(#glow)"/>
+
+    <g stroke="url(#goldLine)" fill="none" stroke-linecap="round" filter="url(#glow)">
+     <!-- برج آزادی شماتیک -->
+     <path d="M253 246 L270 150 L290 137 L310 150 L327 246" stroke-width="4"/>
+     <path d="M262 245L278 164L290 155L302 164L318 245" stroke-width="2.5"/>
+     <path d="M253 246Q290 229 327 246" stroke-width="3"/>
+     <path d="M270 150L310 150M278 164L302 164" stroke-width="3"/>
+     <path d="M280 242L290 177L300 242" stroke-width="2"/>
+     <path d="M260 226L278 194M320 226L302 194" stroke-width="2"/>
+     <path d="M270 150L258 246M310 150L322 246" stroke-width="1.4"/>
+     <path d="M245 250L290 240L335 250" stroke-width="2"/>
+    </g>
+
+    <g fill="#ffce4c" filter="url(#glow)">
+     <circle cx="290" cy="138" r="4"/>
+     <circle cx="170" cy="72" r="2.5"/>
+     <circle cx="425" cy="108" r="2.5"/>
+     <circle cx="232" cy="260" r="2.5"/>
+     <circle cx="360" cy="279" r="2.5"/>
+    </g>
+   </svg>
   </div>
-</header><div class="side" id="side">
-  <div class="drawer">
-    <div class="drawer-head">
-      <strong class="gold">BLACK NOVA</strong>
-      <button class="close" id="closeMenu">×</button>
+
+  <h1 class="hero-title">اسکنر IP و بررسی SNI</h1>
+  <div class="subtitle">ابزار بررسی اتصال و TLS</div>
+
+  <form id="scanForm" class="card form-card">
+   <div class="field">
+    <label for="ip">آدرس IP</label>
+    <div class="input-wrap">
+     <span class="input-icon">◎</span>
+     <input class="has-icon" id="ip" name="ip" placeholder="IP یا دامنه را وارد کنید" dir="ltr" autocomplete="off" required>
     </div>
-    <button class="navitem" data-go="home">⌂ خانه</button>
-    <button class="navitem" data-go="ipscan">⌕ اسکن IP</button>
-    <button class="navitem" data-go="sni">◇ بررسی SNI / TLS</button>
-    <button class="navitem" data-go="ports">↔ تست پورت و پاسخ</button>
-    <button class="navitem" data-go="saved">☆ IPهای ذخیره‌شده</button>
-    <button class="navitem" data-go="history">◷ تاریخچه اسکن</button>
-    <button class="navitem" data-go="settings">⚙ تنظیمات اسکنر</button>
-    <button class="navitem" data-go="about">ⓘ درباره BLACK NOVA</button>
-  </div>
-</div><main class="container" id="home">
-  <section class="hero">
-    <div class="logo">B✦</div>
-    <h1>BLACK NOVA</h1>
-    <div class="gold">IP SCANNER & SNI CHECKER</div>
-    <p>ابزار بررسی اتصال IP و اطلاعات ارتباط امن TLS</p>
-    <div class="status"><span class="dot"></span><span id="apiStatus">در حال بررسی ارتباط با سرور</span></div>
-  </section>  <div class="section-title">ابزارهای اسکن</div>
-  <div class="grid">
-    <div class="card" data-target="ipscan">
-      <div class="feature-icon">⌕</div>
-      <div class="feature-title">اسکن IP</div>
-      <div class="feature-desc">بررسی دسترسی به IP عمومی</div>
+   </div>
+
+   <div class="field">
+    <label for="port">پورت</label>
+    <div class="input-wrap">
+     <span class="input-icon">▤</span>
+     <input class="has-icon" id="port" name="port" type="number" value="443" min="1" max="65535" dir="ltr" required>
     </div>
-    <div class="card" data-target="sni">
-      <div class="feature-icon">◇</div>
-      <div class="feature-title">SNI / TLS</div>
-      <div class="feature-desc">بخش بررسی نام میزبان و TLS</div>
+   </div>
+
+   <div class="field">
+    <label for="sni">نام SNI</label>
+    <div class="input-wrap">
+     <span class="input-icon">▣</span>
+     <input class="has-icon" id="sni" name="sni" placeholder="example.com" dir="ltr" autocomplete="off">
     </div>
-    <div class="card" data-target="ports">
-      <div class="feature-icon">↔</div>
-      <div class="feature-title">تست پورت</div>
-      <div class="feature-desc">بررسی پورت‌های مجاز</div>
-    </div>
-    <div class="card" data-target="history">
-      <div class="feature-icon">◷</div>
-      <div class="feature-title">تاریخچه</div>
-      <div class="feature-desc">مشاهده نتایج قبلی روی همین گوشی</div>
-    </div>
-  </div>  <section id="ipscan">
-    <div class="section-title">⌕ اسکن IP عمومی</div>
-    <div class="panel">
-      <label for="ip">آدرس IP</label>
-      <input id="ip" inputmode="decimal" autocomplete="off" placeholder="مثال: 1.1.1.1">
-      <label for="port">پورت مقصد</label>
-      <select id="port">
-        <option value="443">443 — HTTPS / TLS</option>
-        <option value="80">80 — HTTP</option>
-      </select>
-      <button class="primary" id="scanBtn">شروع بررسی</button>
-      <div class="note">فقط IP عمومی وارد کن. اسکن فقط پورت‌های ۸۰ و ۴۴۳ را بررسی می‌کند. برای اسکن فقط سامانه‌هایی را بررسی کن که اجازهٔ تست آن‌ها را داری.</div>
-      <div class="result" id="scanResult" aria-live="polite"></div>
-    </div>
-  </section>  <section id="sni">
-    <div class="section-title">◇ بررسی SNI / TLS</div>
-    <div class="panel">
-      <div class="gold">بررسی نام میزبان (SNI)</div>
-      <p class="feature-desc">این بخش در رابط کاربری آماده است؛ اتصال واقعی SNI هنوز باید به بک‌اند اضافه شود.</p>
-      <label for="sniHost">نام میزبان SNI</label>
-      <input id="sniHost" placeholder="example.com" autocomplete="off">
-      <label for="sniIp">IP سرور (اختیاری)</label>
-      <input id="sniIp" inputmode="decimal" placeholder="1.1.1.1">
-      <button class="secondary" id="sniBtn" style="width:100%;margin-top:16px">وضعیت قابلیت</button>
-      <div class="result" id="sniResult"></div>
-    </div>
-  </section>  <section id="ports">
-    <div class="section-title">↔ تست پورت و پاسخ</div>
-    <div class="panel">
-      <p class="feature-desc">زمان پاسخ و دسترسی به پورت انتخاب‌شده در درخواست اسکن نمایش داده می‌شود.</p>
-      <button class="secondary" style="width:100%" id="portGo">رفتن به تست IP و پورت</button>
-    </div>
-  </section>  <section id="saved">
-    <div class="section-title">☆ IPهای ذخیره‌شده</div>
-    <div class="panel">
-      <div id="savedList" class="empty">هنوز IP ذخیره‌شده‌ای نداری.</div>
-    </div>
-  </section>  <section id="history">
-    <div class="section-title">◷ تاریخچه اسکن</div>
-    <div class="panel">
-      <div id="historyList" class="empty">هنوز اسکن انجام نشده است.</div>
-      <div class="history-actions">
-        <button class="secondary" id="exportBtn">خروجی JSON</button>
-        <button class="secondary" id="clearBtn">پاک‌کردن تاریخچه</button>
-      </div>
-    </div>
-  </section>  <section id="settings">
-    <div class="section-title">⚙ تنظیمات</div>
-    <div class="panel">
-      <div class="feature-title">ذخیره‌سازی محلی</div>
-      <div class="feature-desc">تاریخچه و IPهای ذخیره‌شده فقط در فضای ذخیره‌سازی همین مرورگر نگهداری می‌شوند.</div>
-    </div>
-  </section>  <section id="about">
-    <div class="section-title">ⓘ درباره BLACK NOVA</div>
-    <div class="panel">
-      <div class="feature-title gold">BLACK NOVA IP SCANNER</div>
-      <p class="feature-desc">ابزار مستقل بررسی IP و TLS. نتایج از سرور آنلاین بررسی می‌شوند و ممکن است با توجه به موقعیت سرور، اپراتور و شبکهٔ کاربر متفاوت باشند.</p>
-    </div>
+   </div>
+
+   <button class="main-btn" id="scanButton" type="submit">⌕ &nbsp; شروع بررسی &nbsp; ›››</button>
+  </form>
+
+  <section class="card status-grid" aria-label="وضعیت بررسی">
+   <div class="status">
+    <div class="status-title">🛡 TLS / SNI</div>
+    <div class="status-value" id="tlsStatus">بررسی نشده</div>
+   </div>
+   <div class="status">
+    <div class="status-title">◷ پینگ:</div>
+    <div class="status-value" id="pingStatus">— ms</div>
+   </div>
+   <div class="status">
+    <div class="status-title">⌁ وضعیت اتصال:</div>
+    <div class="status-value good" id="connectionStatus">آماده بررسی</div>
+   </div>
   </section>
-</main><footer>
-  <button data-go="home"><span>⌂</span>خانه</button>
-  <button data-go="ipscan"><span>⌕</span>اسکن IP</button>
-  <button data-go="sni"><span>◇</span>SNI / TLS</button>
-  <button data-go="saved"><span>☆</span>ذخیره‌شده‌ها</button>
-  <button data-go="history"><span>◷</span>تاریخچه</button>
-</footer><script>
-const API = "https://black-nova-ip-scanner.onrender.com";
+
+  <section class="card saved-card">
+   <button class="section-toggle" id="savedToggle">
+    <span class="symbol">♧</span>
+    <span>نتایج ذخیره‌شده</span>
+    <span>›</span>
+   </button>
+   <div class="saved-list" id="savedList" hidden>
+    <div class="empty">هنوز نتیجه‌ای ذخیره نشده است.</div>
+   </div>
+  </section>
+
+  <div class="notice">
+   این ابزار اتصال را از سمت سرور BLACK NOVA بررسی می‌کند؛ نتیجه ممکن است با شبکه یا اپراتور اینترنت شما متفاوت باشد.
+  </div>
+ </section>
+</main>
+
+<section id="homePage" class="page">
+ <div class="subpage">
+  <div class="art" style="height:240px">
+   <div class="brand-symbol" style="font-size:130px">✳B</div>
+  </div>
+  <h2 style="text-align:center">BLACK NOVA</h2>
+  <p style="text-align:center">ابزار بررسی IP، اتصال و TLS</p>
+  <button class="main-btn" onclick="navigate('scan')">ورود به اسکنر</button>
+ </div>
+</section>
+
+<section id="settingsPage" class="page">
+ <div class="subpage">
+  <h2>تنظیمات</h2>
+  <div class="card" style="padding:18px">
+   <p>تاریخچه و نتایج در حافظه همین مرورگر ذخیره می‌شوند.</p>
+   <button class="action-btn" id="clearHistory">پاک‌کردن تاریخچه</button>
+   <button class="action-btn" id="clearSaved">پاک‌کردن نتایج ذخیره‌شده</button>
+  </div>
+  <div class="notice">BLACK NOVA IP Scanner • نسخه 1.0</div>
+ </div>
+</section>
+
+<nav class="bottom-nav">
+ <button class="nav-btn" data-page="settings">
+  <span class="nav-icon">⚙</span><span>تنظیمات</span>
+ </button>
+ <button class="nav-btn active" data-page="scan">
+  <span class="nav-icon">⌕</span><span>اسکن</span>
+ </button>
+ <button class="nav-btn" data-page="home">
+  <span class="nav-icon">⌂</span><span>خانه</span>
+ </button>
+</nav>
+
+<div class="menu-overlay" id="menuOverlay">
+ <aside class="drawer">
+  <div style="display:flex;justify-content:flex-start">
+   <button class="iconbtn" id="menuClose">×</button>
+  </div>
+  <div class="drawer-brand">
+   <b>✳ BLACK NOVA</b>
+   <small>IP Scanner & SNI Checker</small>
+  </div>
+  <button class="menu-item active" data-go="scan">⌕ <span>اسکن IP و SNI</span></button>
+  <button class="menu-item" data-go="home">⌂ <span>خانه</span></button>
+  <button class="menu-item" id="menuSaved">♧ <span>نتایج ذخیره‌شده</span></button>
+  <button class="menu-item" id="menuHistory">◷ <span>تاریخچه اسکن</span></button>
+  <button class="menu-item" data-go="settings">⚙ <span>تنظیمات</span></button>
+  <div class="notice">BLACK NOVA<br>ابزار بررسی اتصال و TLS</div>
+ </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/*
+  آدرس API فعلی پروژه Render.
+  این آدرس را مطابق سرور موجود نگه دارید.
+*/
+const API_BASE = "https://black-nova-ip-scanner.onrender.com";
+
 const $ = id => document.getElementById(id);
 
-function getStore(key) {
-  try { return JSON.parse(localStorage.getItem(key) || "[]"); }
-  catch { return []; }
+function showToast(message){
+ const el=$("toast");
+ el.textContent=message;
+ el.classList.add("show");
+ clearTimeout(showToast.timer);
+ showToast.timer=setTimeout(()=>el.classList.remove("show"),3200);
 }
-function setStore(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); }
-  catch {}
+
+function readStore(key){
+ try{return JSON.parse(localStorage.getItem(key)||"[]")}
+ catch{return []}
 }
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+
+function writeStore(key,value){
+ localStorage.setItem(key,JSON.stringify(value));
 }
-function goTo(id) {
-  const section = $(id);
-  if (section) section.scrollIntoView({behavior:"smooth",block:"start"});
-  $("side").classList.remove("open");
+
+function navigate(page){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const target=$(page+"Page");
+ if(target)target.classList.add("active");
+
+ document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.classList.toggle("active",btn.dataset.page===page);
+ });
+
+ $("menuOverlay").classList.remove("open");
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-document.querySelectorAll("[data-go]").forEach(btn =>
-  btn.addEventListener("click", () => goTo(btn.dataset.go))
-);
-document.querySelectorAll("[data-target]").forEach(card =>
-  card.addEventListener("click", () => goTo(card.dataset.target))
-);
-$("menuBtn").onclick = () => $("side").classList.add("open");
-$("closeMenu").onclick = () => $("side").classList.remove("open");
-$("side").addEventListener("click", e => {
-  if (e.target === $("side")) $("side").classList.remove("open");
+
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+ btn.addEventListener("click",()=>navigate(btn.dataset.page));
 });
-$("portGo").onclick = () => goTo("ipscan");
 
-async function checkApi() {
-  try {
-    const response = await fetch(API + "/", {method:"GET"});
-    const data = await response.json();
-    $("apiStatus").textContent =
-      response.ok && data.status === "online" ? "سرور آنلاین است" : "پاسخ نامشخص";
-  } catch {
-    $("apiStatus").textContent = "ارتباط برقرار نشد";
-  }
+$("menuOpen").addEventListener("click",()=>$("menuOverlay").classList.add("open"));
+$("menuClose").addEventListener("click",()=>$("menuOverlay").classList.remove("open"));
+
+$("menuOverlay").addEventListener("click",e=>{
+ if(e.target===$("menuOverlay"))$("menuOverlay").classList.remove("open");
+});
+
+document.querySelectorAll("[data-go]").forEach(btn=>{
+ btn.addEventListener("click",()=>navigate(btn.dataset.go));
+});
+
+$("savedToggle").addEventListener("click",()=>{
+ const list=$("savedList");
+ list.hidden=!list.hidden;
+ renderSaved();
+});
+
+$("menuSaved").addEventListener("click",()=>{
+ navigate("scan");
+ $("savedList").hidden=false;
+ renderSaved();
+ $("savedList").scrollIntoView({behavior:"smooth",block:"center"});
+});
+
+$("menuHistory").addEventListener("click",()=>{
+ const history=readStore("bn_history");
+ navigate("scan");
+ $("savedList").hidden=false;
+ $("savedList").innerHTML="<h3>تاریخچه اسکن</h3>"+
+  (history.length?history.slice().reverse().map(item=>resultHTML(item,false)).join(""):'<div class="empty">تاریخچه‌ای وجود ندارد.</div>');
+ $("savedList").scrollIntoView({behavior:"smooth",block:"center"});
+});
+
+function resultHTML(item,canSave=true){
+ const safeIP=String(item.ip||"");
+ const safePort=String(item.port||"");
+ const safeTime=String(item.time||"");
+ return `<div class="result-item">
+  <div class="details">
+   <strong>${escapeHTML(safeIP)}:${escapeHTML(safePort)}</strong>
+   <small>${escapeHTML(safeTime)} · ${item.reachable?"اتصال برقرار":"اتصال ناموفق"}</small>
+  </div>
+  ${canSave?'<button type="button" class="save-again">ذخیره</button>':''}
+ </div>`;
 }
 
-function renderHistory() {
-  const history = getStore("bn_history");
-  $("historyList").innerHTML = history.length
-    ? history.map(item => `<div class="history-item">
-        <strong>${escapeHtml(item.ip)}</strong> · ${escapeHtml(item.port)}<br>
-        <span class="${item.reachable ? "ok" : "bad"}">${item.reachable ? "قابل دسترسی" : "ناموفق"}</span>
-        <small> · ${escapeHtml(item.time)}</small>
-      </div>`).join("")
-    : '<div class="empty">هنوز اسکن انجام نشده است.</div>';
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,char=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[char]));
+}
 
-  const saved = getStore("bn_saved");
-  $("savedList").innerHTML = saved.length
-    ? saved.map(ip => `<div class="history-item">
-        ${escapeHtml(ip)}
-        <button class="secondary" data-remove="${escapeHtml(ip)}">حذف</button>
-      </div>`).join("")
-    : '<div class="empty">هنوز IP ذخیره‌شده‌ای نداری.</div>';
+function renderSaved(){
+ const list=$("savedList");
+ const saved=readStore("bn_saved");
 
-  document.querySelectorAll("[data-remove]").forEach(btn => {
-    btn.onclick = () => {
-      setStore("bn_saved", getStore("bn_saved").filter(ip => ip !== btn.dataset.remove));
-      renderHistory();
-    };
+ if(!saved.length){
+  list.innerHTML='<div class="empty">هنوز نتیجه موفقی ذخیره نشده است.</div>';
+  return;
+ }
+
+ list.innerHTML=saved.slice().reverse().map(item=>resultHTML(item,false)).join("");
+}
+
+$("clearHistory").addEventListener("click",()=>{
+ if(confirm("تاریخچه اسکن پاک شود؟")){
+  writeStore("bn_history",[]);
+  showToast("تاریخچه پاک شد.");
+ }
+});
+
+$("clearSaved").addEventListener("click",()=>{
+ if(confirm("نتایج ذخیره‌شده پاک شوند؟")){
+  writeStore("bn_saved",[]);
+  renderSaved();
+  showToast("نتایج ذخیره‌شده پاک شدند.");
+ }
+});
+
+function isValidIP(value){
+ const parts=value.split(".");
+ return parts.length===4&&parts.every(part=>
+  /^\d{1,3}$/.test(part)&&Number(part)>=0&&Number(part)<=255
+ );
+}
+
+function isValidHostname(value){
+ if(!value||value.length>253)return false;
+ return /^(?=.{1,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)(?:\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?))*$/.test(value);
+}
+
+$("scanForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ const ip=$("ip").value.trim();
+ const port=Number($("port").value);
+ const sni=$("sni").value.trim();
+
+ if(!isValidIP(ip)&&!isValidHostname(ip)){
+  showToast("آدرس IP یا دامنه معتبر وارد کن.");
+  return;
+ }
+
+ if(!Number.isInteger(port)||port<1||port>65535){
+  showToast("شماره پورت معتبر نیست.");
+  return;
+ }
+
+ if(sni&&!isValidHostname(sni)){
+  showToast("نام SNI معتبر نیست.");
+  return;
+ }
+
+ /*
+  سرور فعلی فقط پورت‌های 80 و 443 را پشتیبانی می‌کند.
+  ارسال SNI واقعی نیازمند پیاده‌سازی آن در backend است.
+ */
+ if(port!==80&&port!==443){
+  showToast("سرور فعلی فقط پورت 80 و 443 را پشتیبانی می‌کند.");
+  return;
+ }
+
+ if(sni){
+  showToast("توجه: سرور فعلی هنوز SNI واردشده را به‌صورت واقعی بررسی نمی‌کند.");
+ }
+
+ const button=$("scanButton");
+ button.disabled=true;
+ button.innerHTML='<span class="spinner"></span> در حال بررسی...';
+
+ $("connectionStatus").textContent="در حال بررسی";
+ $("tlsStatus").textContent="در حال بررسی";
+ $("pingStatus").textContent="— ms";
+
+ const start=performance.now();
+
+ try{
+  const response=await fetch(API_BASE+"/check",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({ip,port})
   });
-}
 
-$("scanBtn").onclick = async () => {
-  const ip = $("ip").value.trim();
-  const port = Number($("port").value);
-  const box = $("scanResult");
-  box.className = "result show";
-  box.textContent = "در حال بررسی اتصال...";
-  $("scanBtn").disabled = true;
+  const data=await response.json();
+  const elapsed=Math.round(performance.now()-start);
+  const item={
+   ip,
+   port,
+   sni,
+   reachable:response.ok&&data.reachable===true,
+   tls:data.tls||null,
+   time:new Date().toLocaleString("fa-IR"),
+   elapsed
+  };
 
-  try {
-    const response = await fetch(API + "/check", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ip,port})
-    });
-    const data = await response.json();
+  $("pingStatus").textContent=elapsed+" ms";
+  $("connectionStatus").textContent=item.reachable?"متصل":"ناموفق";
+  $("connectionStatus").className="status-value "+(item.reachable?"good":"bad");
+  $("tlsStatus").textContent=item.tls|| (port===443?"نامشخص":"بدون TLS");
+  $("tlsStatus").className="status-value "+(item.reachable?"good":"bad");
 
-    if (!response.ok && !data.ip) throw new Error(data.error || "درخواست ناموفق بود");
+  const history=readStore("bn_history");
+  history.push(item);
+  writeStore("bn_history",history.slice(-100));
 
-    const reachable = data.reachable === true;
-    const elapsed = data.elapsed_ms == null ? null : data.elapsed_ms;
-    box.innerHTML = `
-      <div class="result-row"><span>IP</span><b dir="ltr">${escapeHtml(data.ip || ip)}</b></div>
-      <div class="result-row"><span>پورت</span><b>${escapeHtml(port)}</b></div>
-      <div class="result-row"><span>وضعیت اتصال</span><b class="${reachable ? "ok" : "bad"}">${reachable ? "قابل دسترسی" : "ناموفق"}</b></div>
-      ${data.tls ? `<div class="result-row"><span>نسخه TLS</span><b dir="ltr">${escapeHtml(data.tls)}</b></div>` : ""}
-      ${elapsed !== null ? `<div class="result-row"><span>زمان پاسخ</span><b>${escapeHtml(elapsed)} ms</b></div>` : ""}
-      ${data.error ? `<div class="note">${escapeHtml(data.error)}</div>` : ""}
-      <button class="secondary" id="saveIpBtn" style="width:100%;margin-top:12px" ${reachable ? "" : "disabled"}>☆ ذخیره IP موفق</button>
-    `;
-
-    const history = getStore("bn_history");
-    history.unshift({ip:data.ip || ip,port,reachable,time:new Date().toLocaleString("fa-IR")});
-    setStore("bn_history", history.slice(0,100));
-
-    const saveBtn = $("saveIpBtn");
-    if (saveBtn) saveBtn.onclick = () => {
-      const saved = getStore("bn_saved");
-      if (!saved.includes(data.ip || ip)) saved.unshift(data.ip || ip);
-      setStore("bn_saved", saved.slice(0,100));
-      renderHistory();
-      saveBtn.textContent = "ذخیره شد ✓";
-    };
-    renderHistory();
-  } catch (error) {
-    box.innerHTML = `<span class="bad">خطا در درخواست</span><p class="note">${escapeHtml(error.message)}</p>
-      <div class="note">اگر سرور خواب بوده، چند لحظه صبر کن و دوباره امتحان کن.</div>`;
-  } finally {
-    $("scanBtn").disabled = false;
+  if(item.reachable){
+   showToast("اتصال برقرار شد؛ نتیجه را می‌توانی ذخیره کنی.");
+   if(confirm("اتصال موفق بود. این IP ذخیره شود؟")){
+    const saved=readStore("bn_saved");
+    if(!saved.some(x=>x.ip===ip&&x.port===port)){
+     saved.push(item);
+     writeStore("bn_saved",saved.slice(-100));
+    }
+    renderSaved();
+   }
+  }else{
+   showToast("اتصال برقرار نشد. پیام سرور را بررسی کن.");
   }
-};
 
-$("sniBtn").onclick = () => {
-  const host = $("sniHost").value.trim();
-  $("sniResult").className = "result show";
-  $("sniResult").innerHTML = host
-    ? `<span class="gold">بخش SNI هنوز به بک‌اند وصل نشده است.</span><p class="note">نام واردشده: ${escapeHtml(host)}. برای تست واقعی باید بک‌اند را برای ارسال SNI و بررسی گواهی TLS توسعه دهیم.</p>`
-    : '<span class="bad">ابتدا نام میزبان SNI را وارد کن.</span>';
-};
+ }catch(error){
+  $("connectionStatus").textContent="خطای اتصال";
+  $("connectionStatus").className="status-value bad";
+  $("tlsStatus").textContent="بررسی نشد";
+  showToast("ارتباط با سرور برقرار نشد؛ ممکن است سرور خواب باشد یا CORS تنظیم نشده باشد.");
+ }finally{
+  button.disabled=false;
+  button.textContent="⌕  شروع بررسی  ›››";
+ }
+});
 
-$("clearBtn").onclick = () => {
-  if (confirm("تاریخچه اسکن پاک شود؟")) {
-    setStore("bn_history", []);
-    renderHistory();
-  }
-};
-$("exportBtn").onclick = () => {
-  const blob = new Blob([JSON.stringify({
-    history:getStore("bn_history"),saved:getStore("bn_saved")
-  },null,2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "black-nova-history.json";
-  a.click();
-  URL.revokeObjectURL(url);
-};
-renderHistory();
-checkApi();
-</script></body>
-                 </html>
+renderSaved();
+</script>
+
+</body>
+  </html>
